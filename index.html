@@ -14,7 +14,7 @@ socket.on('connect', function (data) { // we are connected, should send our name
 });
 socket.on('chat start', function(data) {
     room = data.room;
-    show_chat_window(data.name); // some method which will show chat window
+    show_chat_window(data); // some method which will show chat window
 });
 socket.on('chat end', function(data) {
     hide_chat_window(); // this will close chat window and alert user that the peer ended chat
@@ -34,4 +34,33 @@ var leave_chat = function() { // call this when user want to end current chat
         room = '';
     }
 };
+function show_chat_window(data){
+    var room_id = document.getElementById('room_id');
+    room_id.innerHTML = data.room;
+}
+function buttonClick(){
+    alert("yes");
+}
 </script>
+<table border="1">
+    <tr>
+        <td><strong>Room:</strong></td>
+        <td><strong><span id="room_id"></span></strong></td>
+    </tr>
+    <tr>
+        <td valign="top"><strong>Users:</strong></td>
+        <td>
+            <table border="1" >
+                <tr>
+                    <td>you</td>
+                </tr>
+                <tr>
+                    <td>Faizan</td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2"><button onclick="buttonClick();">Click on me</button></td>
+    </tr>
+</table>
