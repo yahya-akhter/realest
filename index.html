@@ -1,47 +1,101 @@
-<script src="/socket.io/socket.io.js"></script>
-<script type="text/javascript">
-var connected = false;
-var username = 'Faizan';
-var room = '';
-// var socket = io('http://localhost:5000');
-var socket = io.connect('http://localhost:5000');
-socket.on('connect', function (data) { // we are connected, should send our name
-    connected = true;
-    if (username){
-        console.log("event fired");
-        socket.emit('login', {'username' : username});
-    }
-});
-socket.on('chat start', function(data) {
-    room = data.room;
-    show_chat_window(data); // some method which will show chat window
-});
-socket.on('chat end', function(data) {
-    hide_chat_window(); // this will close chat window and alert user that the peer ended chat
-    socket.leave(room); // it's possible to leave from both server and client, hoever it is better to be done by the client in this case
-    room = '';
-});
-socket.on('disconnect', function(data) { // handle server/connection falling
-    console.log('Connection fell or your browser is closing.');
-});
-var send_message = function(text) { // method, which you will call when user hits enter in input field
-    if (connected) socket.emit('message', {'text': text});
-};
-var leave_chat = function() { // call this when user want to end current chat
-    if (connected) {
-        socket.emit('leave room');
-        socket.leave(room);
-        room = '';
-    }
-};
-function show_chat_window(data){
-    var room_id = document.getElementById('room_id');
-    room_id.innerHTML = data.room;
-}
-function buttonClick(){
-    alert("yes");
-}
-</script>
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <title>Tic-Tac-Toe AI</title>
+        <script src="/socket.io/socket.io.js"></script>
+        <script type="text/javascript">
+        var connected = false;
+        var username = 'Faizan';
+        var room = '';
+        // var socket = io('http://localhost:5000');
+        var socket = io.connect('http://localhost:5000');
+        socket.on('connect', function (data) { // we are connected, should send our name
+            connected = true;
+            if (username){
+                console.log("event fired");
+                socket.emit('login', {'username' : username});
+            }
+        });
+        socket.on('chat start', function(data) {
+            room = data.room;
+            show_chat_window(data); // some method which will show chat window
+        });
+        socket.on('chat end', function(data) {
+            hide_chat_window(); // this will close chat window and alert user that the peer ended chat
+            socket.leave(room); // it's possible to leave from both server and client, hoever it is better to be done by the client in this case
+            room = '';
+        });
+        socket.on('disconnect', function(data) { // handle server/connection falling
+            console.log('Connection fell or your browser is closing.');
+        });
+        var send_message = function(text) { // method, which you will call when user hits enter in input field
+            if (connected) socket.emit('message', {'text': text});
+        };
+        var leave_chat = function() { // call this when user want to end current chat
+            if (connected) {
+                socket.emit('leave room');
+                socket.leave(room);
+                room = '';
+            }
+        };
+        function show_chat_window(data){
+            var room_id = document.getElementById('room_id');
+            room_id.innerHTML = data.room;
+        }
+        function buttonClick(){
+            alert("yes");
+        }
+        </script>
+
+        <link rel = 'stylesheet' type = 'text/css' href = 'styles/ui.css'>
+    </head>
+
+    <body>
+        <div class = 'main-container'>
+            <div class = 'board'>
+                <!-- data-indx following cell divs represents cell index in 1D array representation -->
+                <div class='cell' data-indx = "0" ></div>
+                <div class='cell' data-indx = "1" ></div>
+                <div class='cell' data-indx = "2" ></div>
+                <div class='cell' data-indx = "3" ></div>
+                <div class='cell' data-indx = "4" ></div>
+                <div class='cell' data-indx = "5" ></div>
+                <div class='cell' data-indx = "6" ></div>
+                <div class='cell' data-indx = "7" ></div>
+                <div class='cell' data-indx = "8" ></div>
+            </div>
+
+            <div class = 'control'>
+                <!-- div.intial displays the starting controls -->
+                <div class = 'intial'>
+                    <div class = 'difficulty'>
+                        <span class = 'level not-selected' id = "blind">Blind</span>
+                        <span class = 'level not-selected' id = "novice">Novice</span>
+                        <span class = 'level not-selected' id = "master">Master!</span>
+                    </div>
+
+                    <div class='start'> Start </div>
+                </div>
+
+                <!-- div.ingame displays in-game messages and controls -->
+                <div class = 'ingame' id="human">It's your turn ...</div>
+                <div class = 'ingame' id="ai">
+                    <img src = "imgs/robot.png" id = "robot" class = "robot" />
+                    <p>Waint for it ...</p>
+                </div>
+                <div class = 'ingame' id="won">You won !</div>
+                <div class = 'ingame' id="lost">You lost !</div>
+                <div class = 'ingame' id="draw">It's a Draw</div>
+            </div>
+        </div>
+
+        <script src = "scripts/jquery-1.10.1.min.js"></script>
+        <script src = "scripts/ui.js"></script>
+        <script src = "scripts/game.js"></script>
+        <script src = "scripts/ai.js"></script>
+        <script src = "scripts/control.js"></script>
+    </body>
+</html>
 <table border="1">
     <tr>
         <td><strong>Room:</strong></td>

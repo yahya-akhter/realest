@@ -6,6 +6,8 @@ var server = app.listen(app.get('port'), function() {console.log('Node app is ru
 // var io = require('socket.io').listen(server,{origins:'oses-demo.viewdemo.org:* 104.41.152.223 http://oses-demo.viewdemo.org:* http://www.oses-demo.viewdemo.org:*'});
 var io = require('socket.io').listen(server);
 
+app.use(express.static(__dirname + '/public'));
+
 app.get('/', function (req, res) {
   res.sendfile(__dirname + '/index.html');
 });
