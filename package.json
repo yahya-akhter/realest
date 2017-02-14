@@ -1,0 +1,27 @@
+{
+  "name": "example",
+  "version": "0.0.1",
+  "description": "this server based on the dynamic rooms and user assignment.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yahya-akhter/realest.git"
+  },
+  "author": "yahya akhtar",
+  "license": "",
+  "bugs": {
+    "url": "https://github.com/yahya-akhter/realest/issues"
+  },
+  "homepage": "https://github.com/yahya-akhter/realest#readme",
+  "dependencies": {
+    "babel-core": "^6.23.1",
+    "babel-loader": "^6.3.0",
+    "bootstrap": "^3.3.7",
+    "express": "^4.14.1",
+    "react": "^15.4.2",
+    "webpack": "^2.2.1"
+  }
+}
