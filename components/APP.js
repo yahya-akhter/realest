@@ -1,9 +1,10 @@
 var React = require('react');
-var Router = require('react-router');
-var RouteHandler = Router.RouteHandler;
+// var Router = require('react-router');
+// var RouteHandler = Router.RouteHandler;
 
 var io = require('socket.io-client');
 var Header = require('./parts/Header');
+var Audience = require('./Audience');
 
 var APP = React.createClass({
 
@@ -11,6 +12,7 @@ var APP = React.createClass({
         return {
             status: 'disconnected',
             title: '',
+            action: 'default',
             member: {},
             audience: []
         }
@@ -29,13 +31,18 @@ var APP = React.createClass({
         this.socket.emit(eventName, payload);
     },
 
+    update(actionKey,actionValue){
+        console.log(actionKey+"="+actionValue);
+        if(actionKey==='action'){this.setState({ action: actionValue });}
+    },
+
     connect() {
 
-        var member = (sessionStorage.member) ? JSON.parse(sessionStorage.member) : null;
+        // var member = (sessionStorage.member) ? JSON.parse(sessionStorage.member) : null;
 
-        if (member) {
-            this.emit('join', member);
-        }
+        // if (member) {
+        //     this.emit('join', member);
+        // }
 
         this.setState({ status: 'connected' });
     },
@@ -49,7 +56,7 @@ var APP = React.createClass({
     },
 
     joined(member) {
-        sessionStorage.member = JSON.stringify(member);
+        // sessionStorage.member = JSON.stringify(member);
         this.setState({ member: member });
     },
 
@@ -61,7 +68,7 @@ var APP = React.createClass({
         return (
             <div>
                 <Header title={this.state.title} status={this.state.status} />
-                <RouteHandler emit={this.emit} {...this.state} />
+                <Audience emit={this.emit} update = {this.update} {...this.state} />
             </div>
         );
     }

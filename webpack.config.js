@@ -6,7 +6,7 @@ module.exports = {
 	module: {
 		loaders: [
 			{
-				exclude: /(node_modules|app-server.js)/,
+				exclude: /(node_modules|app-server.js|realest)/,
 				loader: 'babel'
 			}
 		]
