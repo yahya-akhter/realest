@@ -6,8 +6,8 @@ var Play = React.createClass({
 	play() {
 		//var memberName = React.findDOMNode(this.refs.name).value;
 		this.props.update('action','searching');
-		// alert("Searching for Partner");
-		setTimeout(function(){this.props.update('action','running');}.bind(this),3000);
+		this.props.emit('playGame','');
+		// setTimeout(function(){this.props.update('action','running');}.bind(this),3000);
 	},
 	
 	render() {

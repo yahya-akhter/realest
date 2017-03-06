@@ -1,6 +1,7 @@
 var express = require('express');
 var _ = require('underscore');
 var app = express();
+Room = require('./logic/Room');
 
 var connections = [];
 var title = 'Untitled Presentation';
@@ -27,16 +28,23 @@ var findPeerForLoneSocket = function(socket) {
     if(Object.keys(queue).length>0){
         // Somebody is in queue, pair them!
         var peer = queue.pop();
-        var room = socket.id + '#' + peer.id;
-
-        peer.join(room);
-        socket.join(room);
+        // var room = socket.id + '#' + peer.id;
+        var data = {
+        	roomId:socket.id + '#' + peer.id,
+        	player1:peer,
+        	player2:socket
+        };
+        rooms[data.roomId] = new Room(data);
+        // peer.join(room);
+        // socket.join(room);
         // register rooms to their names
-        rooms[peer.id] = room;
-        rooms[socket.id] = room;
+        // rooms[peer.id] = room;
+        // rooms[socket.id] = room;
 
         // exchange names between the two of them and start the chat
-        io.sockets.in(room).emit('startGame', {'room':room});
+        // io.sockets.in(room).emit('startGame', {'room':room});
+   		// rooms[socket.id] = new Room(socket.id);
+   		
 
     } else {
         // queue is empty, add our lone socket
@@ -75,6 +83,10 @@ io.sockets.on('connection', function (socket) {
 
 	socket.emit('welcome', {
 		title: title
+	});
+
+	socket.on('playGame', function(payload) {
+		findPeerForLoneSocket(socket);
 	});
 
 	connections.push(socket);

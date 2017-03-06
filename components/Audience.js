@@ -6,9 +6,6 @@ var Running = require('./parts/Running');
 
 var Audience = React.createClass({
 
-	
-
-
 	render() {
 		return (
 			<div>
@@ -17,7 +14,7 @@ var Audience = React.createClass({
 					<Display if={this.props.member.name}>
 						<Display if={this.props.action === 'default'}>
 							<h2>Welcome {this.props.member.name}</h2>
-							<Play update={this.props.update} />
+							<Play emit={this.props.emit} update={this.props.update} />
 						</Display>
 
 						<Display if={this.props.action === 'searching'}>

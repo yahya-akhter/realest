@@ -13,6 +13,7 @@ var APP = React.createClass({
             status: 'disconnected',
             title: '',
             action: 'default',
+            roomId:'',
             member: {},
             audience: []
         }
@@ -25,6 +26,7 @@ var APP = React.createClass({
         this.socket.on('welcome', this.welcome);
         this.socket.on('joined', this.joined);
         this.socket.on('audience', this.updateAudience);
+        this.socket.on('startGame', this.startGame);
     },
 
     emit(eventName, payload) {
@@ -62,6 +64,10 @@ var APP = React.createClass({
 
     updateAudience(newAudience) {
         this.setState({ audience: newAudience });
+    },
+
+    startGame(data) {
+        this.setState({ action: "running", roomId:data.roomId });
     },
 
     render() {
